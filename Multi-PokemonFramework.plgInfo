@@ -1,0 +1,14 @@
+Author: Jared0714
+
+Version: # Plugin version
+    Major: 1
+    Minor: 0
+    Revision: 0
+
+Targets: 0x55D00, 0x55E00, 0x11C400, 0x11C500, 0x164800, 0x175E00, 0x1B5000, 0x1B5100
+
+Title: "Multi-Pokemon Framework"
+
+Summary: Multi-Pokémon Framework is a plugin developed by Jared0714 that uses the CTRPluginFramework library from The Pixellizer Group. It supports both the 6th and 7th generations of the Nintendo 3DS Pokémon games. This plugin is a work in progress as well as a learning exercise.
+
+Description: A CTRPF plugin for the Nintendo 3DS Pokémon games that supports both the 6th and 7th generations.

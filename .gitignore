@@ -1,0 +1,16 @@
+*.o
+*.d
+*.lst
+.vs/
+Build/
+Library/Makefile
+Library/.gitignore
+Library/Release
+Library/Sources
+.DS_Store
+*.3gx
+*.elf
+*.lnk
+*.lst
+*.zip
+desktop.ini

@@ -1,0 +1,43 @@
+{
+    "env": {
+        "devkitpro" : "/opt/devkitpro",
+        "devkitarm" : "C:/devkitPro/devkitARM",
+        "ctrulib" : "C:/devkitPro/libctru"
+    },
+
+    "configurations": [{
+        "name": "Library - Win",
+        "includePath": [
+            "${default}",
+            "${workspaceFolder}/**",
+            "C:/devkitPro/devkitARM/arm-none-eabi/include/**",
+            "C:/devkitPro/devkitARM/lib/**",
+            "C:/devkitPro/msys2/usr/include",
+            "C:/devkitPro/libctru/include",
+            "C:/devkitPro/portlibs/3ds/bin"
+        ],
+
+        "defines": [
+            "ARM11",
+            "_3DS"
+        ],
+
+        "browse": {
+            "path": [
+                "${workspaceFolder}/Library/Includes/**",
+                "C:/devkitPro/libctru/include/**"
+            ],
+
+            "limitSymbolsToIncludedHeaders": true,
+            "databaseFilename": ""
+        },
+
+        "windowsSdkVersion": "10.0.18362.0",
+        "compilerPath": "C:/devkitPro/devkitARM/bin/arm-none-eabi-g++.exe",
+        "cStandard": "c11",
+        "cppStandard": "c++17",
+        "intelliSenseMode": "gcc-arm"
+    }],
+
+    "version": 4
+}
