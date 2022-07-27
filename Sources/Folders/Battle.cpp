@@ -955,8 +955,8 @@ namespace Battle {
 
     void Music(MenuEntry *entry) {
         static const vector<u32> address = {
-            Helpers::AutoRegion<u32>(Helpers::GetVersion<u32>(0x1615FDA4, 0x16127D6C), Helpers::GetVersion<u32>(0x32F99D88, 0x32EDBF1C)),
-            Helpers::AutoRegion<u32>(Helpers::GetVersion<u32>(0x1615FDC8, 0x16127DA0), Helpers::GetVersion<u32>(0x32F99DEC, 0x32EDBF80))
+            Helpers::AutoRegion<u32>(Helpers::GetVersion<u32>(0x1615FDA4, 0x16127D6C), Helpers::GetVersion<u32>(0x32F99D88, 0x32EDD178)),
+            Helpers::AutoRegion<u32>(Helpers::GetVersion<u32>(0x1615FDC8, 0x16127DA0), Helpers::GetVersion<u32>(0x32F99DEC, 0x32EDD8A0))
         };
 
         static const vector<string> original = {
@@ -964,7 +964,7 @@ namespace Battle {
             Helpers::GetVersion("bgm_xy_vs_trainer.aac", "bgm_sg_vs_trainer_sg.dspadpcm.bcstm"), Helpers::GetVersion("bgm_nj_vs_trainer.dspadpcm.bcstm", "bgm_mj_vs_norapoke.dspadpcm.bcstm")
         };
 
-        static const string extension = Helpers::AutoRegion(Helpers::GetVersion(".aac", ".dspadpcm.bcstm"), Helpers::GetVersion(".dspadpcm", ".dspadpcm.bcstm"));
+        static const string extension = Helpers::AutoRegion(Helpers::GetVersion(".aac", ".dspadpcm.bcstm"), ".dspadpcm.bcstm");
 
         if (Utils::FindExtension(getMusicFiles[music], extension.size()) != extension)
             getMusicFiles[music] += extension;
