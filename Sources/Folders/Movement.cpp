@@ -18,7 +18,7 @@ namespace Movement {
                     return;
             }
 
-            void ModelSwapKB(MenuEntry *entry) {
+            void ModelSwapKB(MenuEntry *entry) { // Ty H4x0rSpooky & FunkyGamer26
                 static vector<string> options;
                 KeyboardPlus keyboard;
 
@@ -32,7 +32,7 @@ namespace Movement {
                     Message::Completed();
                 }
             }
-        }ven
+        }
 
         void NoActionReset(MenuEntry *entry) {
             static const u32 address = (Helpers::GetVersion(0x3B9C30, 0x3D5EC8));
