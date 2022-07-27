@@ -202,9 +202,10 @@ void InitMenu(PluginMenu &menu) {
 
     if (group == Group::XY || group == Group::ORAS) {
         *movement += new MenuFolder("Etc.", vector<MenuEntry*>({
+            new MenuEntry("No Action Reset", Movement::Gen6::NoActionReset),
+            EntryWithHotkey(new MenuEntry("Teleportation", Movement::Gen6::Teleportation, Movement::Gen6::TeleportationKB, note + "hold the hotkey(s) below while moving."), {Key::L, ""}),
             new MenuEntry("Unlock Locations", nullptr, Movement::Gen6::UnlockLocations),
-            new MenuEntry("Can Use Fly Anywhere", Movement::Gen6::CanUseFlyAnywhere, note + "you must click on a Pokémon's summary through the 'X' menu in game."),
-            EntryWithHotkey(new MenuEntry("Teleportation", Movement::Gen6::Teleportation, Movement::Gen6::TeleportationKB, note + "hold the hotkey(s) below while moving."), {Key::L, ""})
+            new MenuEntry("Can Use Fly Anywhere", Movement::Gen6::CanUseFlyAnywhere, note + "you must click on a Pokémon's summary through the 'X' menu in game.")
         }));
     }
 
@@ -218,9 +219,6 @@ void InitMenu(PluginMenu &menu) {
 
     *movement += new MenuEntry("Speed Up", Helpers::ChooseEntry(Movement::Gen6::SpeedUp, Movement::Gen7::SpeedUp), note + "only applies to walk and run speeds, and works with D-Pad.");
     *movement += new MenuEntry("Bypass Walls", Helpers::ChooseEntry(Movement::Gen6::BypassWalls, Movement::Gen7::BypassWalls));
-
-    if (group == Group::XY || group == Group::ORAS)
-        *movement += new MenuEntry("No Action Reset", Movement::Gen6::NoActionReset);
 
     if (group == Group::SM || group == Group::USUM)
         *movement += new MenuEntry("Time of Day", nullptr, Movement::Gen7::TimeOfDay);
