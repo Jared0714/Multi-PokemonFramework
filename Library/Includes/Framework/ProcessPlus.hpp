@@ -160,6 +160,12 @@ namespace CTRPluginFramework {
             * \return True if read is successful, false otherwise
             */
             bool Read32(u32 address, u32 &value, bool check);
+
+            /**
+            * \brief Get address
+            * \return The address
+            */
+            string Address(string text, int s);
     };
 }
 
