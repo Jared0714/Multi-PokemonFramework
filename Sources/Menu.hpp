@@ -87,6 +87,7 @@ void InitMenu(PluginMenu &menu) {
         new MenuEntry("No Encounters", Helpers::ChooseEntry(Battle::Gen6::NoEncounters, Battle::Gen7::NoEncounters)),
         new MenuEntry("Spawner", nullptr, Helpers::ChooseEntry(Battle::Gen6::Spawner, Battle::Gen7::Spawner)),
         new MenuEntry("Shiny 100%", Battle::Universal::Shiny100),
+        new MenuEntry("Disable Shiny Lock", Battle::Universal::DisableShinyLock, note + "this will allow you to remove the shiny not appearing setting on some Pokémon."),
         new MenuEntry("Rematch Legendary", nullptr, Helpers::ChooseEntry(Battle::Gen6::RematchLegendary, Battle::Gen7::RematchLegendary))
     }));
 

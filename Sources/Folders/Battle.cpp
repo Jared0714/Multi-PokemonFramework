@@ -419,6 +419,18 @@ namespace Battle {
             if (!ProcessPlus::Write32(address, 0xEA00001C, original, entry, saved))
                 return;
         }
+
+        void DisableShinyLock(MenuEntry *entry) { // From ShinyTop
+            static const string s = Helpers::AutoRegion(Helpers::GetVersion("69K625", "69JH25"), Helpers::GetVersion("864FIH", "875HIH"));
+            static u32 original;
+            static bool saved = false;
+
+            ProcessPlus process;
+            unsigned int x = stoul(process.Address(s, -5), nullptr, 16);
+
+            if (!ProcessPlus::Write32(x, 0xA000009, original, entry, saved))
+                return;
+        }
     }
 
     namespace Gen6 {

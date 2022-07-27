@@ -21,6 +21,7 @@ namespace Battle {
         void ExpMultiplierKB(MenuEntry *entry);
         void ExpMultiplier(MenuEntry *entry);
         void Shiny100(MenuEntry *entry);
+        void DisableShinyLock(MenuEntry *entry);
     }
 
     namespace Gen6 {
