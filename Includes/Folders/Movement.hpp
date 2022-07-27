@@ -7,6 +7,10 @@ using namespace CTRPluginFramework;
 
 namespace Movement {
     namespace Gen6 {
+        namespace ORAS {
+            void ModelSwapKB(MenuEntry *entry);
+        }
+
         void UnlockLocations(MenuEntry *entry);
         void CanUseFlyAnywhere(MenuEntry *entry);
         void TeleportationKB(MenuEntry *entry);

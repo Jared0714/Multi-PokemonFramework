@@ -201,12 +201,16 @@ void InitMenu(PluginMenu &menu) {
     MenuFolder *movement = new MenuFolder("Movement");
 
     if (group == Group::XY || group == Group::ORAS) {
-        *movement += new MenuFolder("Etc.", vector<MenuEntry*>({
-            new MenuEntry("No Action Reset", Movement::Gen6::NoActionReset),
-            EntryWithHotkey(new MenuEntry("Teleportation", Movement::Gen6::Teleportation, Movement::Gen6::TeleportationKB, note + "hold the hotkey(s) below while moving."), {Key::L, ""}),
-            new MenuEntry("Unlock Locations", nullptr, Movement::Gen6::UnlockLocations),
-            new MenuEntry("Can Use Fly Anywhere", Movement::Gen6::CanUseFlyAnywhere, note + "you must click on a Pokémon's summary through the 'X' menu in game.")
-        }));
+        MenuFolder *etc = new MenuFolder("Etc.");
+
+        if (group == Group::ORAS)
+            *etc += new MenuEntry("Model Swap", nullptr, Movement::Gen6::ORAS::ModelSwapKB);
+
+        *etc += new MenuEntry("No Action Reset", Movement::Gen6::NoActionReset);
+        *etc += EntryWithHotkey(new MenuEntry("Teleportation", Movement::Gen6::Teleportation, Movement::Gen6::TeleportationKB, note + "hold the hotkey(s) below while moving."), {Key::L, ""});
+        *etc += new MenuEntry("Unlock Locations", nullptr, Movement::Gen6::UnlockLocations);
+        *etc += new MenuEntry("Can Use Fly Anywhere", Movement::Gen6::CanUseFlyAnywhere, note + "you must click on a Pokémon's summary through the 'X' menu in game.");
+        *movement += etc;
     }
 
     if (group == Group::SM || group == Group::USUM) {

@@ -6,31 +6,41 @@ using namespace CTRPluginFramework;
 
 namespace Movement {
     namespace Gen6 {
-        void UnlockLocations(MenuEntry *entry) {
-            static const u32 address = Helpers::GetVersion(0x8C7A81C, 0x8C81F24);
-            static const vector<u8> flags = {Helpers::GetVersion<u8>({0xF7, 0xFF, 0xF}, {0xCA, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xF3, 0xFB, 0x81})};
-            int length = 0;
+        namespace ORAS {
+            static int swap;
 
-            for (int i = 0; i < flags.size(); i++) {
-                if (Process::Read8(address + i, data8) && data8 != flags[i])
-                    Process::Write8(address + i, flags[i]);
+            void ModelSwap(void) {
+                static const string s("4I7796H");
+                ProcessPlus process;
+                unsigned int x = stoul(process.Address(s, -5), nullptr, 16);
 
-                else length++;
+                if (!Process::Write32(x, CTRPluginFramework::ORAS::models[swap].id))
+                    return;
             }
 
-            if (length == flags.size()) {
-                Message::Warning();
+            void ModelSwapKB(MenuEntry *entry) {
+                static vector<string> options;
+                KeyboardPlus keyboard;
+
+                if (options.empty()) {
+                    for (const CTRPluginFramework::ORAS::Model &nickname : CTRPluginFramework::ORAS::models)
+                        options.push_back(nickname.name);
+                }
+
+                if (keyboard.SetKeyboard(entry->Name() + ":", true, options, swap) != -1) {
+                    ModelSwap();
+                    Message::Completed();
+                }
+            }
+        }ven
+
+        void NoActionReset(MenuEntry *entry) {
+            static const u32 address = (Helpers::GetVersion(0x3B9C30, 0x3D5EC8));
+            static u32 original;
+            static bool saved = false;
+
+            if (!ProcessPlus::Write32(address, 0xE3A00000, original, entry, saved))
                 return;
-            }
-
-            Message::Completed();
-        }
-
-        void CanUseFlyAnywhere(MenuEntry *entry) {
-            static const u32 address = Helpers::GetVersion(0x8C61CF0, 0x8C69330);
-
-            if (Process::Read32(address, data32) && data32 == Helpers::GetVersion(0x6B65C4, 0x7007C0))
-                Process::Write32(address, Helpers::GetVersion(0x6B6A30, 0x700C38));
         }
 
         struct Locations {
@@ -157,6 +167,33 @@ namespace Movement {
             }
         }
 
+        void UnlockLocations(MenuEntry *entry) {
+            static const u32 address = Helpers::GetVersion(0x8C7A81C, 0x8C81F24);
+            static const vector<u8> flags = {Helpers::GetVersion<u8>({0xF7, 0xFF, 0xF}, {0xCA, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xF3, 0xFB, 0x81})};
+            int length = 0;
+
+            for (int i = 0; i < flags.size(); i++) {
+                if (Process::Read8(address + i, data8) && data8 != flags[i])
+                    Process::Write8(address + i, flags[i]);
+
+                else length++;
+            }
+
+            if (length == flags.size()) {
+                Message::Warning();
+                return;
+            }
+
+            Message::Completed();
+        }
+
+        void CanUseFlyAnywhere(MenuEntry *entry) {
+            static const u32 address = Helpers::GetVersion(0x8C61CF0, 0x8C69330);
+
+            if (Process::Read32(address, data32) && data32 == Helpers::GetVersion(0x6B65C4, 0x7007C0))
+                Process::Write32(address, Helpers::GetVersion(0x6B6A30, 0x700C38));
+        }
+
         void SpeedUp(MenuEntry *entry) {
             static const vector<u32> address = {
                 Helpers::GetVersion<u32>(
@@ -226,15 +263,6 @@ namespace Movement {
                     }
                 }
             }
-        }
-
-        void NoActionReset(MenuEntry *entry) {
-            static const u32 address = (Helpers::GetVersion(0x3B9C30, 0x3D5EC8));
-            static u32 original;
-            static bool saved = false;
-
-            if (!ProcessPlus::Write32(address, 0xE3A00000, original, entry, saved))
-                return;
         }
     }
 
