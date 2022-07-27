@@ -952,18 +952,18 @@ namespace Computer {
     void KeepOriginalPokemon(MenuEntry *entry) {
         PK6 *pkmn = new PK6;
         u32 location = (((originalLoc[1] - 1) * 0xE8) + ((originalLoc[0] - 1) * 6960 + GetPokePointer()));
-        static vector<u32> original(0xE8);
+        static u32 original[0xE8];
 
         if (previousLoc[0] != originalLoc[0] || previousLoc[1] != originalLoc[1]) {
             if (Editor::IsValid(location, pkmn, entry))
-                original = ProcessPlus::Read32(location, 0xE8);
+                Process::CopyMemory(original, (void*)location, 0xE8);
 
             previousLoc[0] = originalLoc[0];
             previousLoc[1] = originalLoc[1];
         }
 
-        if (ProcessPlus::Read32(location, 0xE8) != original)
-            ProcessPlus::Write32(location, original, 0xE8);
+        if (ProcessPlus::Read32(location, 0xE8)[0] != original[0])
+            Process::CopyMemory((void*)location, original, 0xE8);
     }
 
     void UnlockEveryBox(MenuEntry *entry) {
