@@ -938,12 +938,30 @@ namespace Computer {
         }
     }
 
-    static u8 originalLoc[2], previousLoc[2];
+    static u8 originalLoc[2];
+    static u32 original[0xE8];
+
+    void OriginalPokemonTemp(void) {
+        PK6 *pkmn = new PK6;
+        File temp("temp.bin", File::RWC);
+        u32 location = (((originalLoc[1] - 1) * 0xE8) + ((originalLoc[0] - 1) * 6960 + GetPokePointer()));
+
+        if (Editor::IsValid(location, pkmn)) {
+            if (temp.Dump(location, 0xE8) == RS_SUCCESS) {
+                File readTemp("temp.bin");
+
+                if (readTemp.Read(original, 0xE8) == RS_SUCCESS) {
+                    Message::Completed();
+                    return;
+                }
+            }
+        }
+    }
 
     void KeepOriginalPokemonKB(MenuEntry *entry) {
         if (KB<u8>("Box:", true, false, 2, originalLoc[0], 0, 1, Helpers::AutoRegion(31, 32), Callback8)) {
             if (KB<u8>("Slot:", true, false, 2, originalLoc[1], 0, 1, 30, Callback8)) {
-                Message::Completed();
+                OriginalPokemonTemp();
                 return;
             }
         }
@@ -952,18 +970,20 @@ namespace Computer {
     void KeepOriginalPokemon(MenuEntry *entry) {
         PK6 *pkmn = new PK6;
         u32 location = (((originalLoc[1] - 1) * 0xE8) + ((originalLoc[0] - 1) * 6960 + GetPokePointer()));
-        static u32 original[0xE8];
 
-        if (previousLoc[0] != originalLoc[0] || previousLoc[1] != originalLoc[1]) {
-            if (Editor::IsValid(location, pkmn, entry))
-                Process::CopyMemory(original, (void*)location, 0xE8);
+        if (entry->IsActivated()) {
+            if (original[0] != 0)  {
+                if (!Process::CopyMemory((u8*)location, original, 0xE8))
+                    return;
+            }
 
-            previousLoc[0] = originalLoc[0];
-            previousLoc[1] = originalLoc[1];
+            else entry->Disable();
         }
 
-        if (ProcessPlus::Read32(location, 0xE8)[0] != original[0])
-            Process::CopyMemory((void*)location, original, 0xE8);
+        if (!entry->IsActivated()) {
+            if (File::Exists("temp.bin"))
+                File::Remove("temp.bin");
+        }
     }
 
     void UnlockEveryBox(MenuEntry *entry) {
